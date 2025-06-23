@@ -24,7 +24,7 @@ static std::unique_ptr<mlir::Pass> createCanonicalizerPass() {
   mlir::GreedyRewriteConfig config;
   // This is arguably not a canonicalization, not always beneficial and
   // expensive.
-  config.enableRegionSimplification = false;
+  config.enableRegionSimplification = mlir::GreedySimplifyRegionLevel::Disabled;
   return createCanonicalizerPass(config);
 }
 

@@ -14,13 +14,13 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib/pylir/${TARGET_TRIPL
 function(collect_libs target listvar)
   set(worklist ${${listvar}})
   list(APPEND worklist ${target})
-  
+
   get_target_property(subDeps ${target} LINK_LIBRARIES)
   foreach (dep IN LISTS subDeps)
     if (NOT TARGET ${dep})
       continue()
     endif ()
-    
+
     get_target_property(depImported ${dep} IMPORTED)
     if (NOT dep IN_LIST worklist AND NOT ${depImported})
       collect_libs(${dep} worklist)
@@ -52,8 +52,8 @@ if (MSVC)
 endif ()
 
 if (${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
-  find_path(LIBUNWIND_INCLUDE_DIR libunwind.h REQUIRED)
-  find_library(LIBUNWIND_LIB unwind REQUIRED)
+    find_path(LIBUNWIND_INCLUDE_DIR libunwind.h REQUIRED HINTS ${LLVM_DIR}/../include)
+    find_library(LIBUNWIND_LIB unwind REQUIRED HINTS ${LLVM_DIR}/../lib)
   target_link_libraries(PylirRuntime
     PRIVATE
     ${LIBUNWIND_LIB}

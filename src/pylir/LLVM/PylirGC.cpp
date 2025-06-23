@@ -198,8 +198,9 @@ class PylirGCMetaDataPrinter final : public llvm::GCMetadataPrinter {
     std::vector<llvm::MCSymbol*> constants;
     std::vector<llvm::MCSymbol*> collections;
     for (const auto& iter : context.getSymbols()) {
-      auto* symbol = iter.getValue();
-      if (!symbol->isInSection())
+      auto const &symbolTableValue = iter.getValue();
+      auto *symbol = symbolTableValue.Symbol;
+      if (!symbol || !symbol->isInSection())
         continue;
 
       auto& section = symbol->getSection();

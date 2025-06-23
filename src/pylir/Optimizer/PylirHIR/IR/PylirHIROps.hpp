@@ -29,6 +29,8 @@
 #include "pylir/Optimizer/PylirHIR/IR/PylirHIRDerivedInterfaces.h.inc"
 // clang-format on
 
+#include <variant>
+
 namespace pylir::HIR {
 
 /// Function parameter class used to compactly represent a single python
